@@ -1,1 +1,1 @@
-# newslist-widget
+# Pluckspices core-web
