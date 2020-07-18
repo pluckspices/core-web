@@ -12,11 +12,11 @@ class AuctionManager extends Component {
   render() {
     return (
       <>
-        <Tabs defaultActiveKey="1" onChange={this.callback}>
-          <TabPane tab="Create Auction" key="auct-1">
+        <Tabs defaultActiveKey="auction-add" onChange={this.callback}>
+          <TabPane tab="Create Auction" key="auction-add">
             <CreateAuction />
           </TabPane>
-          <TabPane tab="Auction List" key="auct-2">
+          <TabPane tab="Auction List" key="auction-list">
             <AuctionList />
           </TabPane>
         </Tabs>
