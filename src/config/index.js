@@ -1,6 +1,6 @@
-import React from 'react';
 import Dashboard from '../components/Dashboard';
 import AuctionManager from '../components/AuctionPanel/AuctionManager';
+import Pooling from '../components/AuctionPanel/Pooling';
 import Planter from '../components/UserManagement/Planter';
 import Dealer from '../components/UserManagement/Dealer';
 import Bidder from '../components/UserManagement/Bidder';
@@ -16,6 +16,11 @@ const routes = [
         path: "/auctionmanager",
         exact: true,
         Component: AuctionManager
+    },
+    {
+        path: "/auctionpooling",
+        exact: true,
+        Component: Pooling
     },
     {
         path: "/users/planter",

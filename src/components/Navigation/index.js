@@ -47,6 +47,9 @@ class Dashboard extends Component {
               <Menu.Item key="auc-man">
                 <Link to="/auctionmanager">Auction Manager</Link>
               </Menu.Item>
+              <Menu.Item key="auc-pool">
+                <Link to="/auctionpooling">Pooling</Link>
+              </Menu.Item>
             </SubMenu>
             <SubMenu
               key="users"
