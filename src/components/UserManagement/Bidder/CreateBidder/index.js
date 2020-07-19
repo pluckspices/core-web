@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button, Input } from "antd";
 
-const { TextArea } = Input;
-
 const layout = {
   labelCol: {
     span: 8,
@@ -52,69 +50,6 @@ class CreateBidder extends Component {
             ]}
           >
             <Input style={{ width: 300 }} placeholder="Bidder Name" />
-          </Form.Item>
-          <Form.Item
-            label="Trader Name"
-            name="traderName"
-            rules={[
-              {
-                required: true,
-                message: "Please input trader name!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="Trader Name" />
-          </Form.Item>
-          <Form.Item label="Address" name="address">
-            <TextArea rows={4} style={{ width: 300 }} placeholder="Address" />
-          </Form.Item>
-          <Form.Item
-            label="Registration NO(TIN)"
-            name="regTin"
-            rules={[
-              {
-                required: true,
-                message: "Please input TIN no!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="TIN" />
-          </Form.Item>
-          <Form.Item
-            label="Central Sales Tax"
-            name="cstNo"
-            rules={[
-              {
-                required: true,
-                message: "Please input CST no!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="CST" />
-          </Form.Item>
-          <Form.Item
-            label="Spices Board Licence"
-            name="spicesBL"
-            rules={[
-              {
-                required: true,
-                message: "Please input SBL no!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="SBL" />
-          </Form.Item>
-          <Form.Item
-            label="Short Name"
-            name="shortName"
-            rules={[
-              {
-                required: true,
-                message: "Please input Short Name!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="Short Name" />
           </Form.Item>
           <Form.Item
             label="Bidder Code"
