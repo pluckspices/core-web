@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Form, Button, Input } from "antd";
+import { Form, Button, Input, notification } from "antd";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const layout = {
   labelCol: {
@@ -23,21 +25,41 @@ class CreateBidder extends Component {
     buttonName: "Create Bidder",
   };
 
-  handleSubmit = () => {
-    console.log("handleSubmit clicked");
+  handleSubmit = (values) => {
+    this.setState({ isSubmitting: true, buttonName: "Creating Bidder" });
+    axios
+      .post("http://localhost:4000/bidder/create", {
+        bidderName: values.bidderName,
+        bidderCode: values.bidderCode,
+      })
+      .then((response) => {
+        this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
+        notification.open({
+          message: `${response.data.bidderCode}`,
+          description: "Bidder created sucessfully.",
+          icon: <CheckCircleOutlined style={{ color: "#a0d911" }} />,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
+        notification.open({
+          message: `ERROR`,
+          description: "Unexcepted error occured! Please try again.",
+          icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+        });
+      });
   };
 
   render() {
-    const { buttonName } = this.state;
+    const { buttonName, isSubmitting } = this.state;
     return (
       <>
         <Form
           {...layout}
           layout="horizontal"
           name="CreateBidder"
-          initialValues={{
-            remember: true,
-          }}
+          onFinish={this.handleSubmit}
         >
           <Form.Item
             label="Bidder Name"
@@ -49,7 +71,7 @@ class CreateBidder extends Component {
               },
             ]}
           >
-            <Input style={{ width: 300 }} placeholder="Bidder Name" />
+            <Input style={{ width: 350 }} placeholder="Bidder Name" />
           </Form.Item>
           <Form.Item
             label="Bidder Code"
@@ -61,15 +83,14 @@ class CreateBidder extends Component {
               },
             ]}
           >
-            <Input style={{ width: 300 }} placeholder="Bidder Code" />
+            <Input
+              style={{ width: 350 }}
+              addonBefore="BID"
+              placeholder="Bidder Number"
+            />
           </Form.Item>
           <Form.Item {...tailLayout}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={false}
-              onClick={this.handleSubmit}
-            >
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
               {buttonName}
             </Button>
           </Form.Item>

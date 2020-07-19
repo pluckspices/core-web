@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Form, Button, Input } from "antd";
+import { Form, Button, Input, notification } from "antd";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const { TextArea } = Input;
 
@@ -25,25 +27,47 @@ class CreateDealer extends Component {
     buttonName: "Create Dealer",
   };
 
-  handleSubmit = () => {
-    console.log("handleSubmit clicked");
+  handleSubmit = (values) => {
+    this.setState({ isSubmitting: true, buttonName: "Creating Dealer" });
+    axios
+      .post("http://localhost:4000/dealer/create", {
+        dealerName: values.traderName,
+        phoneNumber: values.phoneNumber,
+        address: values.address,
+      })
+      .then((response) => {
+        console.log(response);
+        this.setState({ isSubmitting: false, buttonName: "Create Dealer" });
+        notification.open({
+          message: `${response.data.dealerName}`,
+          description: "Dealer created sucessfully.",
+          icon: <CheckCircleOutlined style={{ color: "#a0d911" }} />,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({ isSubmitting: false, buttonName: "Create Dealer" });
+        notification.open({
+          message: `ERROR`,
+          description: "Unexcepted error occured! Please try again.",
+          icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+        });
+      });
   };
 
   render() {
-    const { buttonName } = this.state;
+    const { buttonName, isSubmitting } = this.state;
     return (
       <>
         <Form
           {...layout}
           layout="horizontal"
           name="CreateDealer"
-          initialValues={{
-            remember: true,
-          }}
+          onFinish={this.handleSubmit}
         >
           <Form.Item
             label="Name"
-            name="name"
+            name="dealerName"
             rules={[
               {
                 required: true,
@@ -51,7 +75,7 @@ class CreateDealer extends Component {
               },
             ]}
           >
-            <Input  style={{ width: 300 }} placeholder="Name" />
+            <Input style={{ width: 300 }} placeholder="Name" />
           </Form.Item>
           <Form.Item
             label="Phone Number"
@@ -63,21 +87,13 @@ class CreateDealer extends Component {
               },
             ]}
           >
-            <Input  style={{ width: 300 }} placeholder="Phone Number" />
+            <Input style={{ width: 300 }} placeholder="Phone Number" />
           </Form.Item>
-          <Form.Item
-            label="Address"
-            name="address"
-          >
-            <TextArea rows={4}  style={{ width: 300 }} placeholder="Address" />
+          <Form.Item label="Address" name="address">
+            <TextArea rows={4} style={{ width: 300 }} placeholder="Address" />
           </Form.Item>
           <Form.Item {...tailLayout}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={false}
-              onClick={this.handleSubmit}
-            >
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
               {buttonName}
             </Button>
           </Form.Item>
