@@ -38,6 +38,7 @@
     "antd": "^4.4.2",
     "axios": "^0.19.2",
     "express": "^4.17.1",
+    "moment": "^2.27.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-router-dom": "^5.2.0"

@@ -1,23 +1,39 @@
 import React, { Component } from "react";
 import { Tabs } from "antd";
 import CreateAuction from "./CreateAuction";
-import AuctionList from "./AuctionList";
+import AuctionHolding from "./AuctionHolding";
+import AuctionHistory from "./AuctionHistory";
 
 const { TabPane } = Tabs;
 
 class AuctionManager extends Component {
-  callback = (key) => {
-    console.log(key);
+  state = {
+    activeTab: "auction-add",
   };
+
+  handleTabChange = (activeKey) => {
+    this.setState({ activeTab: activeKey });
+  };
+
+  changeTab = (tabName) => {
+    this.setState({ activeTab: tabName });
+  };
+
   render() {
+    const { activeTab } = this.state;
     return (
       <>
-        <Tabs defaultActiveKey="auction-add" onChange={this.callback}>
+        <Tabs activeKey={activeTab} onChange={this.handleTabChange}>
           <TabPane tab="Create Auction" key="auction-add">
-            <CreateAuction />
+            {activeTab === "auction-add" && (
+              <CreateAuction changeTab={this.changeTab} />
+            )}
           </TabPane>
-          <TabPane tab="Auction List" key="auction-list">
-            <AuctionList />
+          <TabPane tab="Auction Holding" key="auction-holding">
+            {activeTab === "auction-holding" && <AuctionHolding />}
+          </TabPane>
+          <TabPane tab="Auction History" key="auction-history">
+            {activeTab === "auction-history" && <AuctionHistory />}
           </TabPane>
         </Tabs>
       </>
