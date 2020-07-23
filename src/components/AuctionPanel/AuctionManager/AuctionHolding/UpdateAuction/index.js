@@ -4,6 +4,7 @@ import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
 import moment from "moment";
 import AuctionStatus from "../../Shared/AuctionStatus";
+import SetSession from "../../Shared/AuctionSession";
 
 const { Option } = Select;
 
@@ -102,22 +103,6 @@ class UpdateAuction extends Component {
     });
   };
 
-  setSession = (sessionId) => {
-    let sessionName;
-    switch (sessionId) {
-      case 91:
-        sessionName = "Morning";
-        break;
-      case 92:
-        sessionName = "Post-Lunch";
-        break;
-      default:
-        sessionName = "Unknown";
-        break;
-    }
-    return sessionName;
-  };
-
   setStatus = (sessionId) => {
     let statusName;
     switch (sessionId) {
@@ -144,13 +129,18 @@ class UpdateAuction extends Component {
   };
 
   handleSubmit = () => {
-    const { auctionId, auctionDate, auctionSession, auctionStatus } = this.state;
+    const {
+      auctionId,
+      auctionDate,
+      auctionSession,
+      auctionStatus,
+    } = this.state;
     axios
       .put("http://localhost:4000/auctionmanager/update-auction", {
-          auctionId: auctionId,
-          auctionDate: moment(auctionDate).format("YYYY-MM-DD"),
-          auctionSession: auctionSession,
-          auctionStatus: auctionStatus
+        auctionId: auctionId,
+        auctionDate: moment(auctionDate).format("YYYY-MM-DD"),
+        auctionSession: auctionSession,
+        auctionStatus: auctionStatus,
       })
       .then((res) => {
         if (res.status === 200) {
@@ -231,7 +221,7 @@ class UpdateAuction extends Component {
             <Form.Item
               label="Auction Session"
               name="auctionSession"
-              initialValue={this.setSession(auctionSession)}
+              initialValue={SetSession(auctionSession)}
               rules={[
                 {
                   required: true,
@@ -270,7 +260,9 @@ class UpdateAuction extends Component {
                 }
               >
                 {statusOption.map((option) => (
-                  <Option key={option.statusId} value={option.statusId}>{option.statusName}</Option>
+                  <Option key={option.statusId} value={option.statusId}>
+                    {option.statusName}
+                  </Option>
                 ))}
               </Select>
             </Form.Item>
