@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import {
-  Form,
-  DatePicker,
-  Button,
-  notification,
-  Select,
-} from "antd";
-import { SmileOutlined } from "@ant-design/icons";
+import { Form, DatePicker, Button, notification, Select } from "antd";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const { Option } = Select;
@@ -41,53 +35,65 @@ class CreateAuction extends Component {
     });
   };
 
-  onChangeSelect  = (value, name) =>{
+  onChangeSelect = (value, name) => {
     this.setState({
       [name]: value,
     });
-  }
+  };
 
   handleSubmit = () => {
     const { auctionDate, auctionSession } = this.state;
-    if (auctionDate && auctionSession) {
-      this.setState({ isSubmitting: true, buttonName: "Createing Auction" });
-      axios
-        .post("http://localhost:4000/auctionmanager/create", {
-          auctionDate: auctionDate,
-          auctionSession: auctionSession,
-        })
-        .then((response) => {
-          console.log(response);
-          this.setState({ isSubmitting: false, buttonName: "Create Auction" });
-          notification.open({
-            message: `${response.data.auctionId}`,
-            description: "Auction created sucessfully.",
-            icon: <SmileOutlined style={{ color: "#108ee9" }} />,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          this.setState({ isSubmitting: false, buttonName: "Create Auction" });
-          notification.open({
-            message: `ERROR`,
-            description: "Unexcepted error occured! Please try again.",
-            icon: <SmileOutlined style={{ color: "#108ee9" }} />,
-          });
+    this.setState({ isSubmitting: true, buttonName: "Createing Auction" });
+    axios
+      .post("http://localhost:4000/auctionmanager/create", {
+        auctionDate: auctionDate,
+        auctionSession: auctionSession,
+      })
+      .then((response) => {
+        this.setState({ isSubmitting: false, buttonName: "Create Auction" });
+        notification.open({
+          message: `${response.data.auctionId}`,
+          description: "Auction created sucessfully.",
+          icon: <CheckCircleOutlined style={{ color: "#a0d911" }} />,
         });
-    }
+        this.props.changeTab("auction-holding");
+      })
+      .catch((error) => {
+        let response = error.response;
+        if (response.status === 409) {
+          this.setState({ isSubmitting: false, buttonName: "Create Auction" });
+          notification.open({
+            message: response.data.auctionId,
+            description: response.data.message,
+            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+          });
+        } else if (response.status === 500) {
+          this.setState({ isSubmitting: false, buttonName: "Create Auction" });
+          notification.open({
+            message: "ERROR",
+            description: response.data.message,
+            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+          });
+        } else {
+          this.setState({ isSubmitting: false, buttonName: "Create Auction" });
+          notification.open({
+            message: "ERROR",
+            description: "Unexcepted error occured! Please try again.",
+            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+          });
+        }
+      });
   };
 
   render() {
-    const { buttonName } = this.state;
+    const { buttonName, isSubmitting } = this.state;
     return (
       <>
         <Form
           {...layout}
           layout="horizontal"
           name="createAuction"
-          initialValues={{
-            remember: true,
-          }}
+          onFinish={this.handleSubmit}
         >
           <Form.Item
             label="Auction Date"
@@ -100,7 +106,7 @@ class CreateAuction extends Component {
             ]}
           >
             <DatePicker
-              style={{ width: 200 }}
+              style={{ width: 350 }}
               onChange={(value, dataSting) =>
                 this.onChangeDate(value, dataSting, "auctionDate")
               }
@@ -115,26 +121,18 @@ class CreateAuction extends Component {
                 message: "Please input auction session!",
               },
             ]}
-          >           
+          >
             <Select
-              showSearch
-              style={{ width: 200 }}
               placeholder="Select Session"
-              onChange={(value) =>
-                this.onChangeSelect(value, "auctionSession")
-              }
+              style={{ width: 350 }}
+              onChange={(value) => this.onChangeSelect(value, "auctionSession")}
             >
-              <Option value="1">Morning</Option>
-              <Option value="2">Evening</Option>
+              <Option value="91">Morning</Option>
+              <Option value="92">Post-Lunch</Option>
             </Select>
           </Form.Item>
           <Form.Item {...tailLayout}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={false}
-              onClick={this.handleSubmit}
-            >
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
               {buttonName}
             </Button>
           </Form.Item>
