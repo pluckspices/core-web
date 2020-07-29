@@ -31,7 +31,8 @@ class CreatePlanter extends Component {
     this.setState({ isSubmitting: true, buttonName: "Creating Planter" });
     axios
       .post("http://localhost:4000/planter/create", {
-        name: values.name,
+        firstName: values.firstName,
+        lastName: values.lastName,
         crNumber: values.crNumber,
         phoneNumber: values.phoneNumber,
         address: values.address,
@@ -66,16 +67,28 @@ class CreatePlanter extends Component {
           onFinish={this.handleSubmit}
         >
           <Form.Item
-            label="Name"
-            name="name"
+            label="First Name"
+            name="firstName"
             rules={[
               {
                 required: true,
-                message: "Please input name!",
+                message: "Please input First Name!",
               },
             ]}
           >
-            <Input style={{ width: 350 }} placeholder="Name" />
+            <Input style={{ width: 350 }} placeholder="First Name" />
+          </Form.Item>
+          <Form.Item
+            label="Last Name"
+            name="lastName"
+            rules={[
+              {
+                required: true,
+                message: "Please input Last Name!",
+              },
+            ]}
+          >
+            <Input style={{ width: 350 }} placeholder="Last Name" />
           </Form.Item>
           <Form.Item
             label="CR Number"
