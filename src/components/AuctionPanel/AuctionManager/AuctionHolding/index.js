@@ -27,8 +27,14 @@ class AuctionHolding extends Component {
   }
 
   getauctionHoldingData = () => {
+    let token = localStorage.getItem("token");
     axios
-      .get("http://localhost:4000/auctionmanager/holdings")
+      .get("http://localhost:4000/auctionmanager/holdings", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
       .then((res) => {
         this.setState({ auctionHoldings: res.data });
       })
@@ -195,7 +201,7 @@ class AuctionHolding extends Component {
             visible={visibleEditHolding}
             onClose={this.editAuctionClose}
             holdingData={holdingData}
-            refreshHoldings= {this.getauctionHoldingData}
+            refreshHoldings={this.getauctionHoldingData}
           />
         ) : null}
       </>
