@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Input, Button, Checkbox, notification } from "antd";
+import { Form, Input, Button, notification } from "antd";
 import {
   UserOutlined,
   LockOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import AuthStore from '../../store/auth';
 
 import "./index.scss";
 
@@ -38,7 +39,8 @@ const AppLogin = () => {
             new Date().getTime() + remainingMilliSeconds
           );
           localStorage.setItem("expiaryDate", expiaryDate.toISOString());
-          navigate("/");
+          AuthStore.setIsAuth(true);
+          navigate("/coreapp");
         }
       })
       .catch((error) => {

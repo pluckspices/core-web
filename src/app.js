@@ -7,12 +7,14 @@ import {
 } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import AppLogin from "./components/AppLogin";
+import EmptyPage from "./components/Error/emptypage";
+import AuthStore from "./store/auth";
 
 import "./index.scss";
 import "antd/dist/antd.css";
 
 const App = () => {
-  const [isAuth, setIsAuth] = useState(false);
+  let isAuth = AuthStore.getIsAuth();
   return (
     <Router>
       <Routes>
@@ -24,6 +26,7 @@ const App = () => {
         ></Route>
         <Route exact path="/login" element={<AppLogin />} />
         <Route exact path="/coreapp/*" element={<Navigation />} />
+        <Route exact path="*" element={<EmptyPage />} />
       </Routes>
     </Router>
   );

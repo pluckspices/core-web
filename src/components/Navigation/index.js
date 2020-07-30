@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { Layout, Menu, Avatar, Tag } from "antd";
 import { TeamOutlined, UserOutlined, HomeOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import AuthStore from "../../store/auth";
 
 import Dashboard from "../Dashboard";
 import AuctionManager from "../AuctionPanel/AuctionManager";
@@ -18,6 +20,14 @@ const { SubMenu } = Menu;
 
 const Navigation = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const isAuth = AuthStore.getIsAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/login");
+    }
+  });
 
   function onCollapse(collapsed) {
     setCollapsed(collapsed);
