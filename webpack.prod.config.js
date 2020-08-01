@@ -75,6 +75,7 @@ module.exports = () => {
       new CleanWebpackPlugin({
         cleanAfterEveryBuildPatterns: ["dist"],
       }),
+      new webpack.DefinePlugin(envKeys),
     ],
   };
 };
