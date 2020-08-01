@@ -24,8 +24,10 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const envVariables = process.env.REACT_APP_TITLE;
-    console.log(envVariables);
+    const reactAppVariable = process.env.REACT_APP_TITLE;
+    const GATSBYVariable = process.env.GATSBY_TITLE;
+    console.log("reactAppVariable",reactAppVariable );
+    console.log("GATSBYVariable",GATSBYVariable );
     if (!isAuth) {
       navigate("/login");
     }
