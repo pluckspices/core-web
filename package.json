@@ -12,8 +12,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "build": "webpack --env.ENVIRONMENT=development --config webpack.prod.config.js",
-    "serve": "webpack-dev-server --env.ENVIRONMENT=production --config webpack.dev.config.js"
+    "build": "webpack --env.ENVIRONMENT=production --config webpack.prod.config.js",
+    "serve": "webpack-dev-server --env.ENVIRONMENT=development --config webpack.dev.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
