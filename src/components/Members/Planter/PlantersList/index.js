@@ -6,8 +6,9 @@ import {
   CheckCircleOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import { BASE_URL } from "../../../../constants";
 import PlanterDetails from "./PlanterDetails";
-//import UpdateAuction from "./UpdateAuction";
+import UpdatePlanter from "./UpdatePlanter";
 
 const { Column } = Table;
 
@@ -24,7 +25,7 @@ class PlantersList extends Component {
 
   getPlantersList = () => {
     axios
-      .get("http://localhost:4000/v1/member-management/planters/")
+      .get(BASE_URL + "/member-management/planters/")
       .then((res) => {
         this.setState({ plantersList: res.data });
       })
@@ -36,7 +37,7 @@ class PlantersList extends Component {
   actionPlanter(record) {
     return (
       <Space size="middle">
-        <a onClick={() => this.editAuctionDetails(record)}>Update</a>
+        <a onClick={() => this.editPlanterDetails(record)}>Update</a>
         <a onClick={() => this.planterDeleteConfirm(record)}>Delete</a>
       </Space>
     );
@@ -56,9 +57,7 @@ class PlantersList extends Component {
   planterDelete(data) {
     const planterURN = data.planterURN;
     axios
-      .delete(
-        `http://localhost:4000/v1/member-management/planter/${planterURN}`
-      )
+      .delete(`${BASE_URL}/member-management/planter/${planterURN}`)
       .then((res) => {
         if (res.status === 200) {
           notification.open({
@@ -103,12 +102,31 @@ class PlantersList extends Component {
     });
   };
 
+  editPlanterDetails(data) {
+    this.setState({
+      visibleEditPlanter: true,
+      planterData: data,
+    });
+  }
+
+  editPlanterClose = () => {
+    this.setState({
+      visibleEditPlanter: false,
+      holdingData: [],
+    });
+  };
+
   planterName = (record) => {
     return `${record.firstName} ${record.lastName}`;
   };
 
   render() {
-    const { plantersList, visiblePlanterDetails, planterData } = this.state;
+    const {
+      plantersList,
+      visiblePlanterDetails,
+      visibleEditPlanter,
+      planterData,
+    } = this.state;
     return (
       <>
         <Table
@@ -151,14 +169,14 @@ class PlantersList extends Component {
             planterData={planterData}
           />
         ) : null}
-        {/* {visibleEditHolding ? (
-          <UpdateAuction
-            visible={visibleEditHolding}
-            onClose={this.editAuctionClose}
-            holdingData={holdingData}
-            refreshHoldings={this.getauctionHoldingData}
+        {visibleEditPlanter ? (
+          <UpdatePlanter
+            visible={visibleEditPlanter}
+            onClose={this.editPlanterClose}
+            planterData={planterData}
+            refreshDate={this.getPlantersList}
           />
-        ) : null} */}
+        ) : null}
       </>
     );
   }

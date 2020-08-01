@@ -8,10 +8,10 @@ import AuthStore from "../../store/auth";
 import Dashboard from "../Dashboard";
 import AuctionManager from "../AuctionPanel/AuctionManager";
 import Pooling from "../AuctionPanel/Pooling";
-import Planter from "../UserManagement/Planter";
-import Dealer from "../UserManagement/Dealer";
-import Bidder from "../UserManagement/Bidder";
-import Trader from "../UserManagement/Trader";
+import Planter from "../Members/Planter";
+import Dealer from "../Members/Dealer";
+import Bidder from "../Members/Bidder";
+import Trader from "../Members/Trader";
 
 import "./index.scss";
 
@@ -24,11 +24,6 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const reactAppVariable = process.env.REACT_APP_TITLE;
-    const GATSBYVariable = process.env.GATSBY_TITLE;
-    console.log("reactAppVariable",reactAppVariable );
-    console.log("GATSBYVariable",GATSBYVariable );
-    console.log("GOOGLE_API_KEY", process.env.GOOGLE_API_KEY);
     if (!isAuth) {
       navigate("/login");
     }

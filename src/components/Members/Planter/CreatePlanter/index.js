@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Input, notification } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
-
+import { BASE_URL } from "../../../../constants";
 const { TextArea } = Input;
 
 const layout = {
@@ -30,7 +30,7 @@ class CreatePlanter extends Component {
   handleSubmit = (values) => {
     this.setState({ isSubmitting: true, buttonName: "Creating Planter" });
     axios
-      .post("http://localhost:4000/v1/member-management/planter", {
+      .post(BASE_URL + "/member-management/planter", {
         firstName: values.firstName,
         lastName: values.lastName,
         crNumber: values.crNumber,

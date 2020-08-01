@@ -11,6 +11,7 @@ import HoldingDetails from "./HoldingDetails";
 import UpdateAuction from "./UpdateAuction";
 import AuctionStatus from "../Shared/AuctionStatus";
 import SetSession from "../Shared/AuctionSession";
+import { BASE_URL } from "../../../../constants";
 
 const { Column } = Table;
 
@@ -29,7 +30,7 @@ class AuctionHolding extends Component {
   getauctionHoldingData = () => {
     let token = localStorage.getItem("token");
     axios
-      .get("http://localhost:4000/v1/auction-management/auctions/holding", {
+      .get(BASE_URL + "/auction-management/auctions/holding", {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
@@ -85,7 +86,7 @@ class AuctionHolding extends Component {
     const auctionId = data.auctionId;
     axios
       .delete(
-        `http://localhost:4000/v1/auction-management/auction/${auctionId}`
+        `${BASE_URL}/auction-management/auction/${auctionId}`
       )
       .then((res) => {
         if (res.status === 200) {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, DatePicker, Button, notification, Select } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { BASE_URL } from "../../../../constants";
 
 const { Option } = Select;
 
@@ -45,7 +46,7 @@ class CreateAuction extends Component {
     const { auctionDate, auctionSession } = this.state;
     this.setState({ isSubmitting: true, buttonName: "Createing Auction" });
     axios
-      .post("http://localhost:4000/v1/auction-management/auction/", {
+      .post(BASE_URL + "/auction-management/auction/", {
         auctionDate: auctionDate,
         auctionSession: auctionSession,
       })

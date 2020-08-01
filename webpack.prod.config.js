@@ -68,8 +68,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       "process.env": {
-        REACT_APP_TITLE: process.env.REACT_APP_TITLE,
-        GATSBY_TITLE: process.env.GATSBY_TITLE,
+        BASE_URL: process.env.BASE_URL,
       },
     }),
   ],
