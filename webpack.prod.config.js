@@ -9,7 +9,7 @@ module.exports = {
   entry: path.join(__dirname, "./src/index.js"),
   env: {
     REACT_APP_TITLE = process.env.REACT_APP_TITLE,
-    GATSBY_TITLE = process.env.GATSBY_TITLE;
+    GATSBY_TITLE = process.env.GATSBY_TITLE
   },
   output: {
     filename: "bundle.[contenthash].js",
