@@ -1,6 +1,6 @@
 import React from "react";
 import { Tag } from "antd";
-import HoldingStatus from "../../../../../constants/appConstants";
+import { HOLDING_STATUS } from "../../../../../constants";
 
 const AuctionStatus = (props) => {
   function setStatus(statusId) {
@@ -9,35 +9,35 @@ const AuctionStatus = (props) => {
       case 11:
         statusTag = (
           <Tag color="magenta" key={statusId}>
-            {HoldingStatus.UPCOMMING}
+            {HOLDING_STATUS.UPCOMMING}
           </Tag>
         );
         break;
       case 12:
         statusTag = (
           <Tag color="green" key={statusId}>
-            {HoldingStatus.POOLING}
+            {HOLDING_STATUS.POOLING}
           </Tag>
         );
         break;
       case 13:
         statusTag = (
           <Tag color="red" key={statusId}>
-            {HoldingStatus.TRADING}
+            {HOLDING_STATUS.TRADING}
           </Tag>
         );
         break;
       case 14:
         statusTag = (
           <Tag color="cyan" key={statusId}>
-            {HoldingStatus.SETTLEMENT}
+            {HOLDING_STATUS.SETTLEMENT}
           </Tag>
         );
         break;
       case 15:
         statusTag = (
           <Tag color="red" key={statusId}>
-            {HoldingStatus.CLOSED}
+            {HOLDING_STATUS.CLOSED}
           </Tag>
         );
         break;
@@ -45,7 +45,7 @@ const AuctionStatus = (props) => {
       default:
         statusTag = (
           <Tag color="volcano" key={statusId}>
-            {HoldingStatus.UNKNOWN}
+            {HOLDING_STATUS.UNKNOWN}
           </Tag>
         );
         break;

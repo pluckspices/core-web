@@ -8,10 +8,10 @@ import AuthStore from "../../store/auth";
 import Dashboard from "../Dashboard";
 import AuctionManager from "../AuctionPanel/AuctionManager";
 import Pooling from "../AuctionPanel/Pooling";
-import Planter from "../UserManagement/Planter";
-import Dealer from "../UserManagement/Dealer";
-import Bidder from "../UserManagement/Bidder";
-import Trader from "../UserManagement/Trader";
+import Planter from "../Members/Planter";
+import Dealer from "../Members/Dealer";
+import Bidder from "../Members/Bidder";
+import Trader from "../Members/Trader";
 
 import "./index.scss";
 
@@ -41,7 +41,7 @@ const Navigation = () => {
           <Menu.Item key="dash" icon={<HomeOutlined />}>
             <Link to="/">Dashboard</Link>
           </Menu.Item>
-          <SubMenu key="auction" icon={<UserOutlined />} title="Auctions Panel">
+          <SubMenu key="auction" icon={<UserOutlined />} title="Auctions">
             <Menu.Item key="auc-man">
               <Link to="auctionmanager">Auction Manager</Link>
             </Menu.Item>
@@ -49,18 +49,18 @@ const Navigation = () => {
               <Link to="auctionpooling">Pooling</Link>
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="users" icon={<TeamOutlined />} title="Users Management">
+          <SubMenu key="members" icon={<TeamOutlined />} title="Members">
             <Menu.Item key="planter">
-              <Link to="users/planter">Planter</Link>
+              <Link to="members/planter">Planter</Link>
             </Menu.Item>
             <Menu.Item key="dealer">
-              <Link to="users/dealer">Dealer</Link>
+              <Link to="members/dealer">Dealer</Link>
             </Menu.Item>
             <Menu.Item key="bidder">
-              <Link to="users/bidder">Bidder</Link>
+              <Link to="members/bidder">Bidder</Link>
             </Menu.Item>
             <Menu.Item key="trader">
-              <Link to="users/trader">Trader</Link>
+              <Link to="members/trader">Trader</Link>
             </Menu.Item>
           </SubMenu>
         </Menu>
@@ -81,10 +81,10 @@ const Navigation = () => {
               <Route path="/" element={<Dashboard />} />
               <Route path="auctionmanager" element={<AuctionManager />} />
               <Route path="auctionpooling" element={<Pooling />} />
-              <Route path="users/planter" element={<Planter />} />
-              <Route path="users/dealer" element={<Dealer />} />
-              <Route path="users/bidder" element={<Bidder />} />
-              <Route path="users/trader" element={<Trader />} />
+              <Route path="members/planter" element={<Planter />} />
+              <Route path="members/dealer" element={<Dealer />} />
+              <Route path="members/bidder" element={<Bidder />} />
+              <Route path="members/trader" element={<Trader />} />
             </Routes>
           </div>
         </Content>

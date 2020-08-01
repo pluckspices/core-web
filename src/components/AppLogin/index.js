@@ -7,7 +7,8 @@ import {
   CloseCircleOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
-import AuthStore from '../../store/auth';
+import AuthStore from "../../store/auth";
+import { BASE_URL } from "../../constants";
 
 import "./index.scss";
 
@@ -20,7 +21,7 @@ const AppLogin = () => {
     setIsSubmitting(true);
     axios
       .post(
-        "http://localhost:4000/auth/user/login",
+        BASE_URL + "/user-management/owned/login",
         {
           userEmail: values.userEmail,
           userPassword: values.userPassword,

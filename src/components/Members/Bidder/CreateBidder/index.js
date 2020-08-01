@@ -3,8 +3,6 @@ import { Form, Button, Input, notification } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
 
-const { TextArea } = Input;
-
 const layout = {
   labelCol: {
     span: 8,
@@ -21,32 +19,30 @@ const tailLayout = {
   },
 };
 
-class CreatePlanter extends Component {
+class CreateBidder extends Component {
   state = {
     isSubmitting: false,
-    buttonName: "Create Planter",
+    buttonName: "Create Bidder",
   };
 
   handleSubmit = (values) => {
-    this.setState({ isSubmitting: true, buttonName: "Creating Planter" });
+    this.setState({ isSubmitting: true, buttonName: "Creating Bidder" });
     axios
-      .post("http://localhost:4000/planter/create", {
-        name: values.name,
-        crNumber: values.crNumber,
-        phoneNumber: values.phoneNumber,
-        address: values.address,
+      .post("http://localhost:4000/v1/bidder/create", {
+        bidderName: values.bidderName,
+        bidderCode: values.bidderCode,
       })
       .then((response) => {
-        this.setState({ isSubmitting: false, buttonName: "Create Planter" });
+        this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
         notification.open({
-          message: `${response.data.crNumber}`,
-          description: "Planter created sucessfully.",
+          message: `${response.data.bidderCode}`,
+          description: "Bidder created sucessfully.",
           icon: <CheckCircleOutlined style={{ color: "#a0d911" }} />,
         });
       })
       .catch((error) => {
         console.log(error);
-        this.setState({ isSubmitting: false, buttonName: "Create Planter" });
+        this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
         notification.open({
           message: `ERROR`,
           description: "Unexcepted error occured! Please try again.",
@@ -62,47 +58,36 @@ class CreatePlanter extends Component {
         <Form
           {...layout}
           layout="horizontal"
-          name="createPlanter"
+          name="CreateBidder"
           onFinish={this.handleSubmit}
         >
           <Form.Item
-            label="Name"
-            name="name"
+            label="Bidder Name"
+            name="bidderName"
             rules={[
               {
                 required: true,
-                message: "Please input name!",
+                message: "Please input bidder name!",
               },
             ]}
           >
-            <Input style={{ width: 350 }} placeholder="Name" />
+            <Input style={{ width: 350 }} placeholder="Bidder Name" />
           </Form.Item>
           <Form.Item
-            label="CR Number"
-            name="crNumber"
+            label="Bidder Code"
+            name="bidderCode"
             rules={[
               {
                 required: true,
-                message: "Please input CR Number!",
+                message: "Please input Bidder Code!",
               },
             ]}
           >
-            <Input style={{ width: 350 }} placeholder="CR Number" />
-          </Form.Item>
-          <Form.Item
-            label="Phone Number"
-            name="phoneNumber"
-            rules={[
-              {
-                required: true,
-                message: "Please input phone no!",
-              },
-            ]}
-          >
-            <Input style={{ width: 350 }} placeholder="Phone Number" />
-          </Form.Item>
-          <Form.Item label="Address" name="address">
-            <TextArea rows={4} style={{ width: 350 }} placeholder="Address" />
+            <Input
+              style={{ width: 350 }}
+              addonBefore="BID"
+              placeholder="Bidder Number"
+            />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit" loading={isSubmitting}>
@@ -115,4 +100,4 @@ class CreatePlanter extends Component {
   }
 }
 
-export default CreatePlanter;
+export default CreateBidder;

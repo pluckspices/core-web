@@ -1,4 +1,4 @@
- const holdingStatus = {
+export const HOLDING_STATUS = {
     UPCOMMING: "UPCOMMING",
     POOLING: "POOLING",
     TRADING: "TRADING",
@@ -7,4 +7,4 @@
     UNKNOWN: "UNKNOWN",
   };
 
-  export default holdingStatus;
+ export const BASE_URL= process.env.BASE_URL ;

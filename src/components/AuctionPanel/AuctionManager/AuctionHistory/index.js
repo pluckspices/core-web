@@ -4,6 +4,7 @@ import axios from "axios";
 import moment from "moment";
 import AuctionStatus from "../Shared/AuctionStatus";
 import SetSession from "../Shared/AuctionSession";
+import { BASE_URL } from "../../../../constants";
 
 const { Column } = Table;
 
@@ -14,7 +15,7 @@ class AuctionHistory extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/auctionmanager/history")
+      .get(BASE_URL+"/auction-management/auctions/history")
       .then((res) => {
         this.setState({ auctionHistory: res.data });
       })

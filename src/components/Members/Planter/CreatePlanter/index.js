@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Input, notification } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
-
+import { BASE_URL } from "../../../../constants";
 const { TextArea } = Input;
 
 const layout = {
@@ -21,32 +21,33 @@ const tailLayout = {
   },
 };
 
-class CreateDealer extends Component {
+class CreatePlanter extends Component {
   state = {
     isSubmitting: false,
-    buttonName: "Create Dealer",
+    buttonName: "Create Planter",
   };
 
   handleSubmit = (values) => {
-    this.setState({ isSubmitting: true, buttonName: "Creating Dealer" });
+    this.setState({ isSubmitting: true, buttonName: "Creating Planter" });
     axios
-      .post("http://localhost:4000/dealer/create", {
-        dealerName: values.traderName,
+      .post(BASE_URL + "/member-management/planter", {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        crNumber: values.crNumber,
         phoneNumber: values.phoneNumber,
         address: values.address,
       })
       .then((response) => {
-        console.log(response);
-        this.setState({ isSubmitting: false, buttonName: "Create Dealer" });
+        this.setState({ isSubmitting: false, buttonName: "Create Planter" });
         notification.open({
-          message: `${response.data.dealerName}`,
-          description: "Dealer created sucessfully.",
+          message: `${response.data.crNumber}`,
+          description: "Planter created sucessfully.",
           icon: <CheckCircleOutlined style={{ color: "#a0d911" }} />,
         });
       })
       .catch((error) => {
         console.log(error);
-        this.setState({ isSubmitting: false, buttonName: "Create Dealer" });
+        this.setState({ isSubmitting: false, buttonName: "Create Planter" });
         notification.open({
           message: `ERROR`,
           description: "Unexcepted error occured! Please try again.",
@@ -62,20 +63,44 @@ class CreateDealer extends Component {
         <Form
           {...layout}
           layout="horizontal"
-          name="CreateDealer"
+          name="createPlanter"
           onFinish={this.handleSubmit}
         >
           <Form.Item
-            label="Name"
-            name="dealerName"
+            label="First Name"
+            name="firstName"
             rules={[
               {
                 required: true,
-                message: "Please input Name!",
+                message: "Please input First Name!",
               },
             ]}
           >
-            <Input style={{ width: 300 }} placeholder="Name" />
+            <Input style={{ width: 350 }} placeholder="First Name" />
+          </Form.Item>
+          <Form.Item
+            label="Last Name"
+            name="lastName"
+            rules={[
+              {
+                required: true,
+                message: "Please input Last Name!",
+              },
+            ]}
+          >
+            <Input style={{ width: 350 }} placeholder="Last Name" />
+          </Form.Item>
+          <Form.Item
+            label="CR Number"
+            name="crNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please input CR Number!",
+              },
+            ]}
+          >
+            <Input style={{ width: 350 }} placeholder="CR Number" />
           </Form.Item>
           <Form.Item
             label="Phone Number"
@@ -87,10 +112,10 @@ class CreateDealer extends Component {
               },
             ]}
           >
-            <Input style={{ width: 300 }} placeholder="Phone Number" />
+            <Input style={{ width: 350 }} placeholder="Phone Number" />
           </Form.Item>
           <Form.Item label="Address" name="address">
-            <TextArea rows={4} style={{ width: 300 }} placeholder="Address" />
+            <TextArea rows={4} style={{ width: 350 }} placeholder="Address" />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit" loading={isSubmitting}>
@@ -103,4 +128,4 @@ class CreateDealer extends Component {
   }
 }
 
-export default CreateDealer;
+export default CreatePlanter;

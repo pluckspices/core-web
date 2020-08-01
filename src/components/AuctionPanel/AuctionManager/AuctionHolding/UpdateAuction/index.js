@@ -5,6 +5,7 @@ import axios from "axios";
 import moment from "moment";
 import AuctionStatus from "../../Shared/AuctionStatus";
 import SetSession from "../../Shared/AuctionSession";
+import { BASE_URL } from "../../../../../constants";
 
 const { Option } = Select;
 
@@ -136,8 +137,7 @@ class UpdateAuction extends Component {
       auctionStatus,
     } = this.state;
     axios
-      .put("http://localhost:4000/auctionmanager/update-auction", {
-        auctionId: auctionId,
+      .put(`${BASE_URL}/auction-management/auction/${auctionId}`, {
         auctionDate: moment(auctionDate).format("YYYY-MM-DD"),
         auctionSession: auctionSession,
         auctionStatus: auctionStatus,
@@ -210,7 +210,6 @@ class UpdateAuction extends Component {
               initialValue={moment(auctionDate, "YYYY-MM-DD")}
             >
               <DatePicker
-                initialValues={"2015-01-01"}
                 style={{ width: 350 }}
                 disabled={auctionStatus > 12}
                 onChange={(value, dataSting) =>
