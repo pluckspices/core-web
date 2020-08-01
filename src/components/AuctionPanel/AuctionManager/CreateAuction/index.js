@@ -45,7 +45,7 @@ class CreateAuction extends Component {
     const { auctionDate, auctionSession } = this.state;
     this.setState({ isSubmitting: true, buttonName: "Createing Auction" });
     axios
-      .post("http://localhost:4000/auctionmanager/create", {
+      .post("http://localhost:4000/v1/auction-management/auction/", {
         auctionDate: auctionDate,
         auctionSession: auctionSession,
       })

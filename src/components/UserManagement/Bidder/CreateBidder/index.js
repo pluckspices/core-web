@@ -28,7 +28,7 @@ class CreateBidder extends Component {
   handleSubmit = (values) => {
     this.setState({ isSubmitting: true, buttonName: "Creating Bidder" });
     axios
-      .post("http://localhost:4000/bidder/create", {
+      .post("http://localhost:4000/v1/bidder/create", {
         bidderName: values.bidderName,
         bidderCode: values.bidderCode,
       })

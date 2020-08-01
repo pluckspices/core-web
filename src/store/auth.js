@@ -1,6 +1,6 @@
 class AuthReducer {
   constructor() {
-    this.isAuth = false;
+    this.isAuth = true;
   }
 
   setIsAuth(value) {

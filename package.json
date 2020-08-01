@@ -12,8 +12,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "build": "webpack --config webpack.prod.config.js",
-    "serve": "webpack-dev-server --config webpack.dev.config.js"
+    "build": "webpack --env.ENVIRONMENT=development --config webpack.prod.config.js",
+    "serve": "webpack-dev-server --env.ENVIRONMENT=production --config webpack.dev.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -23,6 +23,7 @@
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
+    "dotenv": "^8.2.0",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.12.0",

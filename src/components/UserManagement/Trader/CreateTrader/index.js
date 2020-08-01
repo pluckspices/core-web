@@ -30,7 +30,7 @@ class CreateTrader extends Component {
   handleSubmit = (values) => {
     this.setState({ isSubmitting: true, buttonName: "Creating Trader" });
     axios
-      .post("http://localhost:4000/trader/create", {
+      .post("http://localhost:4000/v1/trader/create", {
         traderName: values.traderName,
         address: values.address,
         tinNo: values.tinNo,

@@ -14,7 +14,7 @@ class AuctionHistory extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/auctionmanager/history")
+      .get("http://localhost:4000/v1/auction-management/auctions/history")
       .then((res) => {
         this.setState({ auctionHistory: res.data });
       })

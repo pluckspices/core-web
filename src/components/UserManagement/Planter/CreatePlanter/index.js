@@ -30,7 +30,7 @@ class CreatePlanter extends Component {
   handleSubmit = (values) => {
     this.setState({ isSubmitting: true, buttonName: "Creating Planter" });
     axios
-      .post("http://localhost:4000/planter/create", {
+      .post("http://localhost:4000/v1/member-management/planter", {
         firstName: values.firstName,
         lastName: values.lastName,
         crNumber: values.crNumber,

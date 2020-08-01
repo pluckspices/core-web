@@ -20,7 +20,7 @@ const AppLogin = () => {
     setIsSubmitting(true);
     axios
       .post(
-        "http://localhost:4000/auth/user/login",
+        "http://localhost:4000/v1/user-management/owned/login",
         {
           userEmail: values.userEmail,
           userPassword: values.userPassword,
