@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Input, notification } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { BASE_URL } from "../../../../constants";
 
 const layout = {
   labelCol: {
@@ -28,7 +29,7 @@ class CreateBidder extends Component {
   handleSubmit = (values) => {
     this.setState({ isSubmitting: true, buttonName: "Creating Bidder" });
     axios
-      .post("http://localhost:4000/v1/bidder/create", {
+      .post(BASE_URL+"/member-management/bidder", {
         bidderName: values.bidderName,
         bidderCode: values.bidderCode,
       })
@@ -41,13 +42,29 @@ class CreateBidder extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
-        this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
-        notification.open({
-          message: `ERROR`,
-          description: "Unexcepted error occured! Please try again.",
-          icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
-        });
+        let response = error.response;
+        if (response.status === 409) {
+          this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
+          notification.open({
+            message: response.data.bidderCode,
+            description: response.data.message,
+            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+          });
+        } else if (response.status === 500) {
+          this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
+          notification.open({
+            message: "ERROR",
+            description: response.data.message,
+            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+          });
+        } else {
+          this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
+          notification.open({
+            message: "ERROR",
+            description: "Unexcepted error occured! Please try again.",
+            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+          });
+        }
       });
   };
 
