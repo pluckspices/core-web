@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const Htmlwebpackplugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -7,10 +8,6 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
   entry: path.join(__dirname, "./src/index.js"),
-  env: {
-    REACT_APP_TITLE = process.env.REACT_APP_TITLE,
-    GATSBY_TITLE = process.env.GATSBY_TITLE
-  },
   output: {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
@@ -68,6 +65,12 @@ module.exports = {
     }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ["dist"],
+    }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        REACT_APP_TITLE: process.env.REACT_APP_TITLE,
+        GATSBY_TITLE: process.env.GATSBY_TITLE,
+      },
     }),
   ],
 };

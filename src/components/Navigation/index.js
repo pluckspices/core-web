@@ -28,6 +28,7 @@ const Navigation = () => {
     const GATSBYVariable = process.env.GATSBY_TITLE;
     console.log("reactAppVariable",reactAppVariable );
     console.log("GATSBYVariable",GATSBYVariable );
+    console.log("GOOGLE_API_KEY", process.env.GOOGLE_API_KEY);
     if (!isAuth) {
       navigate("/login");
     }
