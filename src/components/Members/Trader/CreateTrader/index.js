@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Form, Button, Input, notification } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { BASE_URL } from "../../../../constants";
 
 const { TextArea } = Input;
 
@@ -21,16 +22,16 @@ const tailLayout = {
   },
 };
 
-class CreateTrader extends Component {
-  state = {
-    isSubmitting: false,
-    buttonName: "Create Trader",
-  };
+const CreateTrader = () => {
+  const [form] = Form.useForm();
+  const [buttonName, SetButtonName] = useState("Create Trader");
+  const [isSubmitting, SetIsSubmitting] = useState(false);
 
-  handleSubmit = (values) => {
-    this.setState({ isSubmitting: true, buttonName: "Creating Trader" });
+  const handleSubmit = (values) => {
+    SetButtonName("Creating Trader");
+    SetIsSubmitting(true);
     axios
-      .post("http://localhost:4000/v1/trader/create", {
+      .post(BASE_URL + "/member-management/trader/", {
         traderName: values.traderName,
         address: values.address,
         tinNo: values.tinNo,
@@ -39,17 +40,18 @@ class CreateTrader extends Component {
         shortName: values.shortName,
       })
       .then((response) => {
-        console.log(response);
-        this.setState({ isSubmitting: false, buttonName: "Create Trader" });
+        SetButtonName("Create Trader");
+        SetIsSubmitting(false);
+        form.resetFields();
         notification.open({
-          message: `${response.data.traderName}`,
-          description: "Planter created sucessfully.",
+          message: `${response.data.traderURN}`,
+          description: "Trader created sucessfully.",
           icon: <CheckCircleOutlined style={{ color: "#a0d911" }} />,
         });
       })
       .catch((error) => {
-        console.log(error);
-        this.setState({ isSubmitting: false, buttonName: "Create Trade" });
+        SetButtonName("Create Trader");
+        SetIsSubmitting(false);
         notification.open({
           message: `ERROR`,
           description: "Unexcepted error occured! Please try again.",
@@ -57,89 +59,86 @@ class CreateTrader extends Component {
         });
       });
   };
-
-  render() {
-    const { buttonName, isSubmitting } = this.state;
-    return (
-      <>
-        <Form
-          {...layout}
-          layout="horizontal"
-          name="CreateTrader"
-          onFinish={this.handleSubmit}
+  return (
+    <>
+      <Form
+        {...layout}
+        form={form}
+        layout="horizontal"
+        name="CreateTrader"
+        onFinish={handleSubmit}
+      >
+        <Form.Item
+          label="Trader Name"
+          name="traderName"
+          rules={[
+            {
+              required: true,
+              message: "Please input trader name!",
+            },
+          ]}
         >
-          <Form.Item
-            label="Trader Name"
-            name="traderName"
-            rules={[
-              {
-                required: true,
-                message: "Please input trader name!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="Trader Name" />
-          </Form.Item>
-          <Form.Item label="Address" name="address">
-            <TextArea rows={4} style={{ width: 300 }} placeholder="Address" />
-          </Form.Item>
-          <Form.Item
-            label="Taxpayer No"
-            name="tinNo"
-            rules={[
-              {
-                required: true,
-                message: "Please input TIN!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="TIN" />
-          </Form.Item>
-          <Form.Item
-            label="Central Sales Tax"
-            name="cstNo"
-            rules={[
-              {
-                required: true,
-                message: "Please input CST!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="CST" />
-          </Form.Item>
-          <Form.Item
-            label="Spices Board Licence"
-            name="spicesBoardLicence"
-            rules={[
-              {
-                required: true,
-                message: "Please input Spices Board Licence!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="SBL" />
-          </Form.Item>
-          <Form.Item
-            label="Short Name"
-            name="shortName"
-            rules={[
-              {
-                required: true,
-                message: "Please input Short Name!",
-              },
-            ]}
-          >
-            <Input style={{ width: 300 }} placeholder="Short Name" />
-          </Form.Item>
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit" loading={isSubmitting}>
-              {buttonName}
-            </Button>
-          </Form.Item>
-        </Form>
-      </>
-    );
-  }
-}
+          <Input style={{ width: 300 }} placeholder="Trader Name" />
+        </Form.Item>
+        <Form.Item label="Address" name="address">
+          <TextArea rows={4} style={{ width: 300 }} placeholder="Address" />
+        </Form.Item>
+        <Form.Item
+          label="Taxpayer No"
+          name="tinNo"
+          rules={[
+            {
+              required: true,
+              message: "Please input TIN!",
+            },
+          ]}
+        >
+          <Input style={{ width: 300 }} placeholder="TIN" />
+        </Form.Item>
+        <Form.Item
+          label="Central Sales Tax"
+          name="cstNo"
+          rules={[
+            {
+              required: true,
+              message: "Please input CST!",
+            },
+          ]}
+        >
+          <Input style={{ width: 300 }} placeholder="CST" />
+        </Form.Item>
+        <Form.Item
+          label="Spices Board Licence"
+          name="spicesBoardLicence"
+          rules={[
+            {
+              required: true,
+              message: "Please input Spices Board Licence!",
+            },
+          ]}
+        >
+          <Input style={{ width: 300 }} placeholder="SBL" />
+        </Form.Item>
+        <Form.Item
+          label="Short Name"
+          name="shortName"
+          rules={[
+            {
+              required: true,
+              message: "Please input Short Name!",
+            },
+          ]}
+        >
+          <Input style={{ width: 300 }} placeholder="Short Name" />
+        </Form.Item>
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit" loading={isSubmitting}>
+            {buttonName}
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
+  );
+};
 
 export default CreateTrader;
