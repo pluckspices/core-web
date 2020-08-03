@@ -89,7 +89,7 @@ const Navigation = () => {
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          PluckSpices Design ©2020
+          nithin.antony Designs ©2020
         </Footer>
       </Layout>
     </Layout>

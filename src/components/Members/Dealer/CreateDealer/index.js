@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Input, notification } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { BASE_URL } from "../../../../constants";
 
 const { TextArea } = Input;
 
@@ -30,8 +31,8 @@ class CreateDealer extends Component {
   handleSubmit = (values) => {
     this.setState({ isSubmitting: true, buttonName: "Creating Dealer" });
     axios
-      .post("http://localhost:4000/v1/dealer/create", {
-        dealerName: values.traderName,
+      .post(BASE_URL+ "/member-management/dealer", {
+        dealerName: values.dealerName,
         phoneNumber: values.phoneNumber,
         address: values.address,
       })
@@ -39,13 +40,12 @@ class CreateDealer extends Component {
         console.log(response);
         this.setState({ isSubmitting: false, buttonName: "Create Dealer" });
         notification.open({
-          message: `${response.data.dealerName}`,
+          message: `${response.data.dealerURN}`,
           description: "Dealer created sucessfully.",
           icon: <CheckCircleOutlined style={{ color: "#a0d911" }} />,
         });
       })
       .catch((error) => {
-        console.log(error);
         this.setState({ isSubmitting: false, buttonName: "Create Dealer" });
         notification.open({
           message: `ERROR`,

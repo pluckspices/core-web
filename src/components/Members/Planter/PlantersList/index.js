@@ -25,7 +25,7 @@ class PlantersList extends Component {
 
   getPlantersList = () => {
     axios
-      .get(BASE_URL + "/member-management/planters/")
+      .get(BASE_URL + "/member-management/planters")
       .then((res) => {
         this.setState({ plantersList: res.data });
       })
@@ -112,7 +112,7 @@ class PlantersList extends Component {
   editPlanterClose = () => {
     this.setState({
       visibleEditPlanter: false,
-      holdingData: [],
+      planterData: [],
     });
   };
 
