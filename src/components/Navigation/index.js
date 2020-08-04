@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { Layout, Menu, Avatar, Tag, Popover } from "antd";
-import { TeamOutlined, UserOutlined, HomeOutlined } from "@ant-design/icons";
+import { Layout, Menu, Avatar, Tag, Dropdown } from "antd";
+import {
+  TeamOutlined,
+  UserOutlined,
+  HomeOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import AuthStore from "../../store/auth";
 
@@ -33,11 +39,16 @@ const Navigation = () => {
     setCollapsed(collapsed);
   }
 
-  const content = (
-    <div>
-      <p>Content</p>
-      <p>Content</p>
-    </div>
+  const menu = (
+    <Menu style={{ width: 150 }}>
+      <Menu.Item key="profile" icon={<UserOutlined />}>
+        Profile
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="logout" icon={<LogoutOutlined />}>
+        Logout
+      </Menu.Item>
+    </Menu>
   );
 
   const sideMargin = collapsed ? 80 : 200;
@@ -83,6 +94,20 @@ const Navigation = () => {
               <Link to="members/trader">Trader</Link>
             </Menu.Item>
           </SubMenu>
+          <SubMenu key="system" icon={<SettingOutlined />} title="System">
+            <Menu.Item key="planter">
+              <Link to="members/planter">Planter</Link>
+            </Menu.Item>
+            <Menu.Item key="dealer">
+              <Link to="members/dealer">Dealer</Link>
+            </Menu.Item>
+            <Menu.Item key="bidder">
+              <Link to="members/bidder">Bidder</Link>
+            </Menu.Item>
+            <Menu.Item key="trader">
+              <Link to="members/trader">Trader</Link>
+            </Menu.Item>
+          </SubMenu>
         </Menu>
       </Sider>
       <Layout className="site-layout" style={{ marginLeft: sideMargin }}>
@@ -93,9 +118,9 @@ const Navigation = () => {
           <Tag className="env-tag" color="#87d068">
             {process.env.NODE_ENV}
           </Tag>
-          <Popover content={content} title="Title">
+          <Dropdown overlay={menu} placement="bottomRight">
             <Avatar className="user-avatar" />
-          </Popover>
+          </Dropdown>
         </Header>
         <Content style={{ padding: "0 30px", marginTop: 90 }}>
           <div

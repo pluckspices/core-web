@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Input, Button, notification } from "antd";
+import { Form, Input, Button, notification, Row, Layout } from "antd";
 import {
   UserOutlined,
+  TeamOutlined,
   LockOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
@@ -10,11 +11,16 @@ import axios from "axios";
 import AuthStore from "../../store/auth";
 import { BASE_URL } from "../../constants";
 
+const { Header, Content, Footer, Sider } = Layout;
+
 import "./index.scss";
 
 const AppLogin = () => {
   const [buttonName, setButtonName] = useState("Login");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  useEffect(() => {
+    document.title = "Login - onenext";
+  });
   let navigate = useNavigate();
   function handleSiginin(values) {
     setButtonName("Logging");
@@ -68,46 +74,78 @@ const AppLogin = () => {
       });
   }
   return (
-    <div className="login">
-      <Form name="userLogin" className="form" onFinish={handleSiginin}>
-        <Form.Item
-          name="userEmail"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Username!",
-            },
-          ]}
-        >
-          <Input prefix={<UserOutlined />} placeholder="Username" />
-        </Form.Item>
-        <Form.Item
-          name="userPassword"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Password!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<LockOutlined />}
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-button"
-            loading={isSubmitting}
+    <Layout
+      style={{
+        minHeight: "100vh",
+        backgroundImage: `url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg)`,
+      }}
+    >
+      <Row
+        type="flex"
+        justify="center"
+        align="middle"
+        style={{
+          minHeight: "85vh",
+        }}
+      >
+        <Form name="userLogin" className="form" onFinish={handleSiginin}>
+          <Form.Item
+            name="userEmail"
+            rules={[
+              {
+                required: true,
+                message: "please input your username!",
+              },
+            ]}
           >
-            {buttonName}
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+            <Input
+              type="email"
+              prefix={<UserOutlined />}
+              placeholder="username"
+            />
+          </Form.Item>
+          <Form.Item
+            name="ownerCode"
+            rules={[
+              {
+                required: true,
+                message: "please input your agency code!",
+              },
+            ]}
+          >
+            <Input prefix={<TeamOutlined />} placeholder="agency code" />
+          </Form.Item>
+          <Form.Item
+            name="userPassword"
+            rules={[
+              {
+                required: true,
+                message: "please input your password!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined />}
+              type="password"
+              placeholder="password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-button"
+              loading={isSubmitting}
+            >
+              {buttonName}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Row>
+      <Footer style={{ textAlign: "center" }}>
+        nithin.antony Designs ©2020
+      </Footer>
+    </Layout>
   );
 };
 

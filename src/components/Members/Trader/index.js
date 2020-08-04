@@ -10,10 +10,10 @@ class Trader extends Component {
     return (
       <>
         <Tabs defaultActiveKey="trader-add">
-          <TabPane tab="Create New" key="trader-add">
+          <TabPane tab="Trader Registration" key="trader-add">
             <CreateTrader />
           </TabPane>
-          <TabPane tab="Trader List" key="trader-list">
+          <TabPane tab="Registered Traders" key="trader-list">
             <TradersList />
           </TabPane>
         </Tabs>

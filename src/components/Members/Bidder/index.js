@@ -10,10 +10,10 @@ class Bidder extends Component {
     return (
       <>
         <Tabs defaultActiveKey="bidder-add">
-          <TabPane tab="Create New" key="bidder-add">
+          <TabPane tab="Bidder Registration" key="bidder-add">
             <CreateBidder />
           </TabPane>
-          <TabPane tab="Bidder List" key="bidder-list">
+          <TabPane tab="Registered Bidders" key="bidder-list">
             <BiddersList />
           </TabPane>
         </Tabs>

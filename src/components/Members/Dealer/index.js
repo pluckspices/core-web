@@ -10,10 +10,10 @@ class Dealer extends Component {
     return (
       <>
         <Tabs defaultActiveKey="dealer-add">
-          <TabPane tab="Create New" key="dealer-add">
+          <TabPane tab="Dealer Registration" key="dealer-add">
             <CreateDealer />
           </TabPane>
-          <TabPane tab="Dealer List" key="dealer-list">
+          <TabPane tab="Registered Dealers" key="dealer-list">
             <DealersList />
           </TabPane>
         </Tabs>
