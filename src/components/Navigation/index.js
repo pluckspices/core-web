@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { Layout, Menu, Avatar, Tag } from "antd";
+import { Layout, Menu, Avatar, Tag, Popover } from "antd";
 import { TeamOutlined, UserOutlined, HomeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import AuthStore from "../../store/auth";
@@ -33,9 +33,29 @@ const Navigation = () => {
     setCollapsed(collapsed);
   }
 
+  const content = (
+    <div>
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+  );
+
+  const sideMargin = collapsed ? 80 : 200;
+  const headerWidth = collapsed ? "95%" : "85%";
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={onCollapse}
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
+        }}
+      >
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["dash"]} mode="inline">
           <Menu.Item key="dash" icon={<HomeOutlined />}>
@@ -65,14 +85,19 @@ const Navigation = () => {
           </SubMenu>
         </Menu>
       </Sider>
-      <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }}>
+      <Layout className="site-layout" style={{ marginLeft: sideMargin }}>
+        <Header
+          className="site-layout-background"
+          style={{ position: "fixed", zIndex: 1, width: headerWidth }}
+        >
           <Tag className="env-tag" color="#87d068">
             {process.env.NODE_ENV}
           </Tag>
-          <Avatar className="user-avatar" />
+          <Popover content={content} title="Title">
+            <Avatar className="user-avatar" />
+          </Popover>
         </Header>
-        <Content style={{ margin: "16px" }}>
+        <Content style={{ padding: "0 30px", marginTop: 90 }}>
           <div
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
