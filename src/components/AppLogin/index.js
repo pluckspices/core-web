@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, notification, Row, Layout } from "antd";
 import {
   UserOutlined,
-  TeamOutlined,
+  KeyOutlined,
   LockOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
@@ -11,7 +11,7 @@ import axios from "axios";
 import AuthStore from "../../store/auth";
 import { BASE_URL } from "../../constants";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Footer } = Layout;
 
 import "./index.scss";
 
@@ -19,7 +19,7 @@ const AppLogin = () => {
   const [buttonName, setButtonName] = useState("Login");
   const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
-    document.title = "Login - onenext";
+    document.title = "Login - auction experio";
   });
   let navigate = useNavigate();
   function handleSiginin(values) {
@@ -85,47 +85,81 @@ const AppLogin = () => {
         justify="center"
         align="middle"
         style={{
-          minHeight: "85vh",
+          minHeight: "10vh",
+        }}
+      >
+        <h1>auction experio</h1>
+      </Row>
+      <Row
+        type="flex"
+        justify="center"
+        align="middle"
+        style={{
+          minHeight: "75vh",
         }}
       >
         <Form name="userLogin" className="form" onFinish={handleSiginin}>
           <Form.Item
             name="userEmail"
+            validateTrigger="onBlur"
             rules={[
               {
                 required: true,
                 message: "please input your username!",
               },
+              {
+                type: "email",
+                whitespace: true,
+                message: "please input valid username!",
+              },
             ]}
           >
             <Input
-              type="email"
+              size="large"
               prefix={<UserOutlined />}
               placeholder="username"
             />
           </Form.Item>
           <Form.Item
-            name="ownerCode"
+            name="auctioneerUID"
+            normalize={(input) => input.toUpperCase()}
+            validateTrigger="onBlur"
             rules={[
               {
                 required: true,
-                message: "please input your agency code!",
+                message: "please input your UIN!",
+              },
+              {
+                max: 3,
+                whitespace: true,
+                message: "please valid UIN!",
               },
             ]}
           >
-            <Input prefix={<TeamOutlined />} placeholder="agency code" />
+            <Input
+              prefix={<KeyOutlined />}
+              size="large"
+              placeholder="auctioneer UIN"
+            />
           </Form.Item>
           <Form.Item
             name="userPassword"
+            validateTrigger="onBlur"
             rules={[
               {
                 required: true,
                 message: "please input your password!",
               },
+              {
+                whitespace: true,
+                min: 8,
+                message: "please input valid password!",
+              },
             ]}
           >
             <Input
               prefix={<LockOutlined />}
+              size="large"
               type="password"
               placeholder="password"
             />
@@ -134,6 +168,7 @@ const AppLogin = () => {
             <Button
               type="primary"
               htmlType="submit"
+              size="large"
               className="login-button"
               loading={isSubmitting}
             >
