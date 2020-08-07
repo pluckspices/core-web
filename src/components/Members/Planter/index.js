@@ -14,10 +14,10 @@ const Planter = () => {
   return (
     <>
       <Tabs onChange={handleTabChange} defaultActiveKey={activeTab}>
-        <TabPane tab="Create New" key="planter-add">
+        <TabPane tab="Planter Registration" key="planter-add">
           <CreatePlanter />
         </TabPane>
-        <TabPane tab="Planters" key="planter-list">
+        <TabPane tab="Registered Planters" key="planter-list">
           {activeTab === "planter-list" && <PlantersList />}
         </TabPane>
       </Tabs>
