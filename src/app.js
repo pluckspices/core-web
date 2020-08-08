@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,24 +8,22 @@ import {
 import Navigation from "./components/Navigation";
 import AppLogin from "./components/AppLogin";
 import EmptyPage from "./components/Error/emptypage";
-import AuthStore from "./store/auth";
+import GuardedRoute from "./utils/GuardedRoute";
 
 import "./index.scss";
 import "antd/dist/antd.css";
 
 const App = () => {
-  let isAuth = AuthStore.getIsAuth();
   return (
     <Router>
       <Routes>
-        {!isAuth && <Navigate to="/login" replace />}
         <Route
           exact
           path="/"
           element={<Navigate to="/coreapp" replace />}
         ></Route>
         <Route exact path="/login" element={<AppLogin />} />
-        <Route exact path="/coreapp/*" element={<Navigation />} />
+        <GuardedRoute exact path="/coreapp/*" element={<Navigation />} />
         <Route exact path="*" element={<EmptyPage />} />
       </Routes>
     </Router>

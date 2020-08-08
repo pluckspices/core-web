@@ -29,31 +29,24 @@ class CreateBidder extends Component {
   handleSubmit = (values) => {
     this.setState({ isSubmitting: true, buttonName: "Creating Bidder" });
     axios
-      .post(BASE_URL+"/member-management/bidder", {
+      .post(BASE_URL + "/member-management/bidder", {
         bidderName: values.bidderName,
         bidderCode: values.bidderCode,
       })
       .then((response) => {
         this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
         notification.open({
-          message: `${response.data.bidderCode}`,
-          description: "Bidder created sucessfully.",
+          message: response.data.bidderCode,
+          description: response.data.message,
           icon: <CheckCircleOutlined style={{ color: "#a0d911" }} />,
         });
       })
       .catch((error) => {
         let response = error.response;
-        if (response.status === 409) {
+        if (response && response.status === 409) {
           this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
           notification.open({
-            message: response.data.bidderCode,
-            description: response.data.message,
-            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
-          });
-        } else if (response.status === 500) {
-          this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
-          notification.open({
-            message: "ERROR",
+            message: response.data.details.bidderCode,
             description: response.data.message,
             icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
           });
@@ -61,7 +54,7 @@ class CreateBidder extends Component {
           this.setState({ isSubmitting: false, buttonName: "Create Bidder" });
           notification.open({
             message: "ERROR",
-            description: "Unexcepted error occured! Please try again.",
+            description: response.data.messag,
             icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
           });
         }

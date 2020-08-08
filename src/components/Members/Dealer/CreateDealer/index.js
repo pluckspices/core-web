@@ -30,11 +30,13 @@ class CreateDealer extends Component {
 
   handleSubmit = (values) => {
     this.setState({ isSubmitting: true, buttonName: "Creating Dealer" });
+    let auctioneerUIC = localStorage.getItem("auctioneer_uic");
     axios
       .post(BASE_URL+ "/member-management/dealer", {
         dealerName: values.dealerName,
         phoneNumber: values.phoneNumber,
         address: values.address,
+        auctioneerUIC: auctioneerUIC
       })
       .then((response) => {
         console.log(response);

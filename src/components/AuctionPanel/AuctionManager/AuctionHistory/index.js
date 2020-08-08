@@ -15,13 +15,20 @@ class AuctionHistory extends Component {
 
   componentDidMount() {
     axios
-      .get(BASE_URL+"/auction-management/auctions/history")
+      .get(BASE_URL + "/auction-management/auctions/history")
       .then((res) => {
-        this.setState({ auctionHistory: res.data });
+        this.setState({ auctionHistory: res.data.auctions });
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  componentWillUnmountMount() {
+    this.setDate({
+      auctionHoldings: [],
+      holdingData: [],
+    });
   }
 
   viewauctionHistory = (auctionId) => {

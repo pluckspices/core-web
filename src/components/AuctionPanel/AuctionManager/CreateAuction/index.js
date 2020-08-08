@@ -61,14 +61,14 @@ class CreateAuction extends Component {
       })
       .catch((error) => {
         let response = error.response;
-        if (response.status === 409) {
+        if (response && response.status === 409) {
           this.setState({ isSubmitting: false, buttonName: "Create Auction" });
           notification.open({
-            message: response.data.auctionId,
+            message: response.data.details.auctionId,
             description: response.data.message,
             icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
           });
-        } else if (response.status === 500) {
+        } else if (response && response.status === 500) {
           this.setState({ isSubmitting: false, buttonName: "Create Auction" });
           notification.open({
             message: "ERROR",
@@ -128,12 +128,17 @@ class CreateAuction extends Component {
               style={{ width: 350 }}
               onChange={(value) => this.onChangeSelect(value, "auctionSession")}
             >
-              <Option value="91">Morning</Option>
-              <Option value="92">Post-Lunch</Option>
+              <Option value={91}>Morning</Option>
+              <Option value={92}>Post-Lunch</Option>
             </Select>
           </Form.Item>
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit" loading={isSubmitting}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isSubmitting}
+              disabled={isSubmitting}
+            >
               {buttonName}
             </Button>
           </Form.Item>

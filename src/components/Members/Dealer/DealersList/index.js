@@ -27,7 +27,7 @@ class DealersList extends Component {
     axios
       .get(BASE_URL + "/member-management/dealers")
       .then((res) => {
-        this.setState({ dealersList: res.data });
+        this.setState({ dealersList: res.data.dealers });
       })
       .catch((error) => {
         console.log(error);
@@ -145,11 +145,7 @@ class DealersList extends Component {
               </Space>
             )}
           />
-          <Column
-            title="Name"
-            dataIndex="dealerName"
-            key="fullName"
-          />
+          <Column title="Name" dataIndex="dealerName" key="fullName" />
           <Column
             title="Phone Number"
             dataIndex="phoneNumber"

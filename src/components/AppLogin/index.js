@@ -8,7 +8,6 @@ import {
   CloseCircleOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
-import AuthStore from "../../store/auth";
 import { BASE_URL } from "../../constants";
 
 const { Footer } = Layout;
@@ -31,6 +30,7 @@ const AppLogin = () => {
         {
           userEmail: values.userEmail,
           userPassword: values.userPassword,
+          auctioneerUID: values.auctioneerUID,
         },
         {
           headers: {
@@ -41,12 +41,13 @@ const AppLogin = () => {
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("token", response.data.token);
-          const remainingMilliSeconds = 60 * 60 * 1000;
+          localStorage.setItem("auctioneer_uic", response.data.auctioneerUID);
+          localStorage.setItem("user_uuid", response.data.userId);
+          const remainingMilliSeconds = 30 * 60 * 1000;
           const expiaryDate = new Date(
             new Date().getTime() + remainingMilliSeconds
           );
           localStorage.setItem("expiaryDate", expiaryDate.toISOString());
-          AuthStore.setIsAuth(true);
           navigate("/coreapp");
         }
       })

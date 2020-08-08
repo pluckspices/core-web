@@ -27,6 +27,13 @@ class AuctionHolding extends Component {
     this.getauctionHoldingData();
   }
 
+  componentWillUnmountMount() {
+    this.setDate({
+      auctionHoldings: [],
+      holdingData: [],
+    });
+  }
+
   getauctionHoldingData = () => {
     let token = localStorage.getItem("token");
     axios
@@ -37,7 +44,7 @@ class AuctionHolding extends Component {
         },
       })
       .then((res) => {
-        this.setState({ auctionHoldings: res.data });
+        this.setState({ auctionHoldings: res.data.auctions });
       })
       .catch((error) => {
         console.log(error);
@@ -85,9 +92,7 @@ class AuctionHolding extends Component {
   auctionDelete(data) {
     const auctionId = data.auctionId;
     axios
-      .delete(
-        `${BASE_URL}/auction-management/auction/${auctionId}`
-      )
+      .delete(`${BASE_URL}/auction-management/auction/${auctionId}`)
       .then((res) => {
         if (res.status === 200) {
           notification.open({

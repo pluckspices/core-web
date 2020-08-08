@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Link } from "react-router-dom";
 import { Layout, Menu, Avatar, Tag, Dropdown } from "antd";
 import {
   TeamOutlined,
@@ -8,8 +8,7 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import AuthStore from "../../store/auth";
+import GuardedRoute from "../../utils/GuardedRoute";
 
 import Dashboard from "../Dashboard";
 import AuctionManager from "../AuctionPanel/AuctionManager";
@@ -26,14 +25,6 @@ const { SubMenu } = Menu;
 
 const Navigation = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const isAuth = AuthStore.getIsAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
-    }
-  });
 
   function onCollapse(collapsed) {
     setCollapsed(collapsed);
@@ -128,13 +119,16 @@ const Navigation = () => {
             style={{ padding: 24, minHeight: 360 }}
           >
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="auctionmanager" element={<AuctionManager />} />
-              <Route path="auctionpooling" element={<Pooling />} />
-              <Route path="members/planter" element={<Planter />} />
-              <Route path="members/dealer" element={<Dealer />} />
-              <Route path="members/bidder" element={<Bidder />} />
-              <Route path="members/trader" element={<Trader />} />
+              <GuardedRoute path="/" element={<Dashboard />} />
+              <GuardedRoute
+                path="auctionmanager"
+                element={<AuctionManager />}
+              />
+              <GuardedRoute path="auctionpooling" element={<Pooling />} />
+              <GuardedRoute path="members/planter" element={<Planter />} />
+              <GuardedRoute path="members/dealer" element={<Dealer />} />
+              <GuardedRoute path="members/bidder" element={<Bidder />} />
+              <GuardedRoute path="members/trader" element={<Trader />} />
             </Routes>
           </div>
         </Content>

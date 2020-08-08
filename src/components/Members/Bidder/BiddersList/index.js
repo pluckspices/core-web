@@ -6,7 +6,7 @@ import {
   CheckCircleOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
-import moment from 'moment';
+import moment from "moment";
 import { BASE_URL } from "../../../../constants";
 
 const { Column } = Table;
@@ -22,7 +22,7 @@ class BiddersList extends Component {
     axios
       .get(BASE_URL + "/member-management/bidders/")
       .then((res) => {
-        this.setState({ biddersList: res.data });
+        this.setState({ biddersList: res.data.bidders });
       })
       .catch((error) => {
         console.log(error);
@@ -64,20 +64,18 @@ class BiddersList extends Component {
       })
       .catch((error) => {
         let response = error.response;
-        if (response.status === 404) {
-          notification.open({
-            message: response.data.bidderCode,
-            description: response.data.message,
-            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
-          });
-        } else if (response.status === 500) {
+        if (response && response.status === 404) {
           notification.open({
             message: response.data.bidderCode,
             description: response.data.message,
             icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
           });
         } else {
-          console.log("unknown error");
+          notification.open({
+            message: "ERROR",
+            description: response.data.message,
+            icon: <CloseCircleOutlined style={{ color: "#f5222d" }} />,
+          });
         }
       });
   }
@@ -90,16 +88,8 @@ class BiddersList extends Component {
           rowKey={(biddersList) => biddersList.bidderCode}
           dataSource={biddersList}
         >
-          <Column
-            title="Bidder Code"
-            dataIndex="bidderCode"
-            key="bidderCode"
-          />
-          <Column
-            title="Name"
-            dataIndex="bidderName"
-            key="fullName"
-          />
+          <Column title="Bidder Code" dataIndex="bidderCode" key="bidderCode" />
+          <Column title="Name" dataIndex="bidderName" key="fullName" />
           <Column
             title="Active from"
             dataIndex="createdOn"
