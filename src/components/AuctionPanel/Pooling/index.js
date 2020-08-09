@@ -12,7 +12,7 @@ class Pooling extends Component {
     return (
       <>
         <Tabs defaultActiveKey="pooling-add" onChange={this.callback}>
-          <TabPane tab="Create Item" key="pooling-add">
+          <TabPane tab="Create Pool" key="pooling-add">
             <CreateItem />
           </TabPane>
           <TabPane tab="Pooled Item List" key="pooling-list"></TabPane>

@@ -27,7 +27,7 @@ class PlantersList extends Component {
     axios
       .get(BASE_URL + "/member-management/planters")
       .then((res) => {
-        this.setState({ plantersList: res.data });
+        this.setState({ plantersList: res.data.planters });
       })
       .catch((error) => {
         console.log(error);

@@ -27,7 +27,7 @@ class TradersList extends Component {
     axios
       .get(BASE_URL + "/member-management/traders")
       .then((res) => {
-        this.setState({ tradersList: res.data });
+        this.setState({ tradersList: res.data.traders });
       })
       .catch((error) => {
         let response = error.response;
