@@ -158,10 +158,9 @@ const AppLogin = () => {
               },
             ]}
           >
-            <Input
+            <Input.Password
               prefix={<LockOutlined />}
               size="large"
-              type="password"
               placeholder="password"
             />
           </Form.Item>

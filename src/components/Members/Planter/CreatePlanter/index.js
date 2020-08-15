@@ -28,6 +28,7 @@ const CreatePlanter = () => {
   const [isSubmitting, SetIsSubmitting] = useState(false);
 
   const handleSubmit = (values) => {
+    const auctioneerUIC = localStorage.getItem("auctioneer_uic");
     SetButtonName("Creating Planter");
     SetIsSubmitting(true);
     axios
@@ -37,6 +38,7 @@ const CreatePlanter = () => {
         crNumber: values.crNumber,
         phoneNumber: values.phoneNumber,
         address: values.address,
+        auctioneerUIC: auctioneerUIC
       })
       .then((response) => {
         SetButtonName("Create Planter");

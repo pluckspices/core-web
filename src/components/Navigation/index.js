@@ -4,9 +4,10 @@ import { Layout, Menu, Avatar, Tag, Dropdown } from "antd";
 import {
   TeamOutlined,
   UserOutlined,
-  HomeOutlined,
+  DashboardOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ReconciliationOutlined,
 } from "@ant-design/icons";
 import GuardedRoute from "../../utils/GuardedRoute";
 
@@ -60,15 +61,19 @@ const Navigation = () => {
       >
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["dash"]} mode="inline">
-          <Menu.Item key="dash" icon={<HomeOutlined />}>
+          <Menu.Item key="dash" icon={<DashboardOutlined />}>
             <Link to="/">Dashboard</Link>
           </Menu.Item>
-          <SubMenu key="auction" icon={<UserOutlined />} title="Auctions">
+          <SubMenu
+            key="auction"
+            icon={<ReconciliationOutlined />}
+            title="Auctions"
+          >
             <Menu.Item key="auc-man">
-              <Link to="auctionmanager">Auction Manager</Link>
+              <Link to="auctionmanager">Manage Auctions</Link>
             </Menu.Item>
             <Menu.Item key="auc-pool">
-              <Link to="auctionpooling">Pooling</Link>
+              <Link to="auctionpooling">Commodity Pooling</Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu key="members" icon={<TeamOutlined />} title="Members">
@@ -85,20 +90,11 @@ const Navigation = () => {
               <Link to="members/trader">Trader</Link>
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="system" icon={<SettingOutlined />} title="System">
-            <Menu.Item key="planter">
-              <Link to="members/planter">Planter</Link>
-            </Menu.Item>
-            <Menu.Item key="dealer">
-              <Link to="members/dealer">Dealer</Link>
-            </Menu.Item>
-            <Menu.Item key="bidder">
-              <Link to="members/bidder">Bidder</Link>
-            </Menu.Item>
-            <Menu.Item key="trader">
-              <Link to="members/trader">Trader</Link>
-            </Menu.Item>
-          </SubMenu>
+          <SubMenu
+            key="system"
+            icon={<SettingOutlined />}
+            title="System"
+          ></SubMenu>
         </Menu>
       </Sider>
       <Layout className="site-layout" style={{ marginLeft: sideMargin }}>
