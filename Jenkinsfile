@@ -1,12 +1,12 @@
 pipeline {
   agent {
-    node {
-      label 'web'
+    docker {
+      image 'node'
     }
 
   }
   stages {
-    stage('') {
+    stage('error') {
       steps {
         echo 'Starting'
       }
