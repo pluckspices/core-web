@@ -32,6 +32,7 @@
     "webpack-dev-server": "^3.8.2"
   },
   "dependencies": {
+    "@ant-design/pro-table": "^2.5.10",
     "antd": "^4.4.2",
     "axios": "^0.19.2",
     "express": "^4.17.1",

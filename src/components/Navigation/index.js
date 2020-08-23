@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Routes, Link } from "react-router-dom";
-import { Layout, Menu, Avatar, Tag, Dropdown } from "antd";
+import React, { useState, useEffect } from "react";
+import { Routes, Link, useNavigate } from "react-router-dom";
+import { Layout, Menu, Avatar, Tag, Dropdown, Modal } from "antd";
 import {
   TeamOutlined,
   UserOutlined,
@@ -8,6 +8,7 @@ import {
   SettingOutlined,
   LogoutOutlined,
   ReconciliationOutlined,
+  ToolOutlined,
 } from "@ant-design/icons";
 import GuardedRoute from "../../utils/GuardedRoute";
 
@@ -25,11 +26,46 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const Navigation = () => {
+  console.log("Navigation called");
   const [collapsed, setCollapsed] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      autoLogout();
+    }, 30  * 60 * 1000);
+  }, []);
+
+  let navigate = useNavigate();
 
   function onCollapse(collapsed) {
     setCollapsed(collapsed);
   }
+
+  const logout = () => {
+    Modal.confirm({
+      title: "Do you want to Logout?",
+      onOk() {
+        localStorage.clear();
+        navigate("/login");
+      },
+      okText: "Logout",
+      cancelText: "Cancel",
+    });
+  };
+
+  const autoLogout = () => {
+    Modal.info({
+      title: "Auto Logout",
+      content: (
+        <div>
+          <p>Please login to continue</p>
+        </div>
+      ),
+      onOk() {
+        localStorage.clear();
+        navigate("/login");
+      },
+    });
+  };
 
   const menu = (
     <Menu style={{ width: 150 }}>
@@ -37,7 +73,7 @@ const Navigation = () => {
         Profile
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="logout" icon={<LogoutOutlined />}>
+      <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
         Logout
       </Menu.Item>
     </Menu>
@@ -64,16 +100,12 @@ const Navigation = () => {
           <Menu.Item key="dash" icon={<DashboardOutlined />}>
             <Link to="/">Dashboard</Link>
           </Menu.Item>
-          <SubMenu
-            key="auction"
-            icon={<ReconciliationOutlined />}
-            title="Auctions"
-          >
+          <SubMenu key="auction" icon={<ToolOutlined />} title="Services">
             <Menu.Item key="auc-man">
-              <Link to="auctionmanager">Manage Auctions</Link>
+              <Link to="auctionmanager">Auctions</Link>
             </Menu.Item>
             <Menu.Item key="auc-pool">
-              <Link to="auctionpooling">Commodity Pooling</Link>
+              <Link to="auctionpooling">Commodity</Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu key="members" icon={<TeamOutlined />} title="Members">

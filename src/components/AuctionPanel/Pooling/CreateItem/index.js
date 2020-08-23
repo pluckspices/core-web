@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Form,
   Button,
-  Input,
   Select,
   Steps,
   Spin,
@@ -219,7 +218,6 @@ const auctionSelection = () => {
   const [poolCategory, SetPoolCategory] = useState(0);
   const [openAuctions, SetOpenAuctions] = useState([]);
   const [openLots, SetOpenLots] = useState([]);
-  useEffect(() => {}, []);
 
   const handlePoolCategoryChange = (value) => {
     SetPoolCategory(value);
@@ -244,6 +242,7 @@ const auctionSelection = () => {
       }
     });
   };
+  
   return (
     <>
       <Form.Item
