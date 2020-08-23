@@ -242,7 +242,7 @@ const auctionSelection = () => {
       }
     });
   };
-  
+
   return (
     <>
       <Form.Item
@@ -319,7 +319,7 @@ const auctionSelection = () => {
 const CreateItem = () => {
   const [current, SetCurrent] = useState(0);
   const [isSubmitting, SetIsSubmitting] = useState(false);
-  const [buttonName, SetButtonName] = useState("Create Item");
+  const [buttonName, SetButtonName] = useState("Create Pool");
   const [memberData, SetMemberData] = useState([]);
   const [itemData, SetItemData] = useState([]);
   const [auctionData, SetAuctionData] = useState([]);
@@ -355,6 +355,7 @@ const CreateItem = () => {
       next();
     } else {
       SetIsSubmitting(true);
+      SetButtonName("Creating Pool");
       let memberPicked = memberData;
       let itemDetails = itemData;
       let poolPicked = values;
@@ -392,11 +393,15 @@ const CreateItem = () => {
             });
             form.resetFields();
             SetIsSubmitting(false);
+            SetButtonName("Create Pool");
+            SetCurrent(0);
           }
         })
         .catch((error) => {
           let response = error.response;
           SetIsSubmitting(false);
+          SetButtonName("Create Pool");
+          SetCurrent(0);
           if (response && response.status === 409) {
             notification.open({
               message: `Lot ${response.data.details.lotNo}`,
