@@ -6,11 +6,11 @@ pipeline {
     }
 
   }
-  stage('Initialize'){
+  stages {
+    stage('Initialize'){
         def dockerHome = tool 'dev01Docker'
         env.PATH = "${dockerHome}/bin:${env.PATH}"
     }
-  stages {
     stage('Build') {
       steps {
         sh 'npm install'
